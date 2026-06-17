@@ -60,7 +60,7 @@ export default function ProductsPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-20 md:px-10">
-        <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <motion.div layout className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           <AnimatePresence mode="popLayout">
             {list.map((p) => (
               <ProductCard key={p.name} product={p} onClick={() => setSelected(p)} />

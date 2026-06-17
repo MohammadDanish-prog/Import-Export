@@ -11,6 +11,8 @@ import ServicesPage from "./pages/ServicesPage";
 import QualityPage from "./pages/QualityPage";
 import GalleryPage from "./pages/GalleryPage";
 import ContactPage from "./pages/ContactPage";
+import CostEstimatorPage from "./pages/CostEstimatorPage";
+import InvestPage from "./pages/InvestPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 // Admin
@@ -40,6 +42,8 @@ export default function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/quality" element={<QualityPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/cost-estimator" element={<CostEstimatorPage />} />
+        <Route path="/invest" element={<InvestPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
         {/* Admin panel */}

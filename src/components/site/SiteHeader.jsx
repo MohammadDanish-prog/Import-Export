@@ -9,8 +9,10 @@ const NAV = [
   { to: "/products", label: "Products" },
   { to: "/markets", label: "Markets" },
   { to: "/services", label: "Services" },
+  { to: "/cost-estimator", label: "Cost Estimator" },
   { to: "/quality", label: "Quality" },
-  { to: "/gallery", label: "Gallery" },
+ // { to: "/gallery", label: "Gallery" },
+  { to: "/invest", label: "Invest" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -65,14 +67,14 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-0.5">
           {NAV.map((item) => {
             const active = pathname === item.to;
             return (
               <Link
                 key={item.to}
                 to={item.to}
-                className={`relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                className={`relative rounded-full px-2.5 py-2 text-[13px] font-medium transition-colors whitespace-nowrap ${
                   active ? "text-brand" : "text-foreground/70 hover:text-foreground"
                 }`}
               >

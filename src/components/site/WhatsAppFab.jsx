@@ -13,5 +13,5 @@ export function WhatsAppFab() {
       </svg>
       <span className="absolute inset-0 -z-10 rounded-full animate-ping bg-[#25D366]/40" />
     </a>
-  );
+  )
 }

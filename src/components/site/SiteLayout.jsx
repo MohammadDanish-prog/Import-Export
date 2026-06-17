@@ -8,7 +8,7 @@ export function SiteLayout({ children }) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
-      <WhatsAppFab />
+      {/* <WhatsAppFab /> */}
     </div>
   );
 }

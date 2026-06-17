@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Ship, Snowflake, ShieldCheck, Globe2, Package, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Ship, Snowflake, ShieldCheck, Globe2, Package, CheckCircle2, Handshake, TrendingUp } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { GALLERY, SERVICES } from "@/lib/site-data";
 import GlobeHero from "@/components/site/GlobeHero";
+import { CostEstimator } from "@/components/site/CostEstimator";
 
 const STATS = [
   { value: "20+", label: "Trading Partners" },
@@ -26,7 +27,7 @@ export default function HomePage() {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_20%_10%,color-mix(in_oklab,var(--brand)_18%,transparent),transparent),radial-gradient(50%_50%_at_90%_20%,color-mix(in_oklab,var(--accent-orange)_15%,transparent),transparent)]" />
         <div className="absolute inset-0 -z-10 opacity-[0.04] [background-image:linear-gradient(to_right,var(--foreground)_1px,transparent_1px),linear-gradient(to_bottom,var(--foreground)_1px,transparent_1px)] [background-size:48px_48px]" />
 
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:px-10 md:py-24 lg:grid-cols-2 lg:items-center">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-1 md:px-10 md:py-5 lg:grid-cols-2 lg:items-center">
           <div>
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -146,6 +147,23 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Cost Estimator teaser */}
+      <Section
+        eyebrow="Plan your shipment"
+        title="Estimate your trade cost instantly"
+        sub="Pick your route, quantity, shipping method and packaging — get an indicative cost breakdown in seconds."
+      >
+        <CostEstimator compact />
+        <div className="mt-6 text-center">
+          <Link
+            to="/cost-estimator"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold hover:bg-muted transition"
+          >
+            Open full Cost Estimator <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </Section>
+
       {/* Why us */}
       <Section
         eyebrow="Why partner with us"
@@ -211,6 +229,42 @@ export default function HomePage() {
           </div>
         </div>
       </Section>
+
+      {/* Invest teaser */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-10"
+        >
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div className="flex items-start gap-4">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-soft text-brand">
+                <Handshake className="h-6 w-6" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                  <TrendingUp className="h-3.5 w-3.5" /> Investment &amp; Partnership
+                </div>
+                <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">
+                  Want to invest in our company?
+                </h3>
+                <p className="mt-2 max-w-xl text-muted-foreground">
+                  We welcome equity and partnership conversations with investors who want a
+                  stake in a growing, established fresh produce trading business based in Dubai.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/invest"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 text-sm font-semibold text-brand-foreground shadow-elevated hover-lift lg:justify-self-end"
+            >
+              Explore Investment <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </motion.div>
+      </section>
 
       {/* CTA */}
       <section className="mx-auto my-20 max-w-7xl px-6 md:px-10">

@@ -9,7 +9,7 @@ const NAV = [
   { to: "/products", label: "Products" },
   { to: "/markets", label: "Markets" },
   { to: "/services", label: "Services" },
-  { to: "/cost-estimator", label: "Cost Estimator" },
+ // { to: "/cost-estimator", label: "Cost Estimator" },
   { to: "/quality", label: "Quality" },
  // { to: "/gallery", label: "Gallery" },
   { to: "/invest", label: "Invest" },
@@ -20,7 +20,9 @@ export function SiteHeader() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() =>
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);

@@ -21,7 +21,9 @@ const NAV = [
 export default function AdminLayout() {
   const { pathname } = useLocation();
   const [openMobile, setOpenMobile] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() =>
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+  );
 
   useEffect(() => { setOpenMobile(false); }, [pathname]);
 

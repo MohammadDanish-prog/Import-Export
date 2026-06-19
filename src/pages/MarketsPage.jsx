@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { Plane, Ship, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plane, Ship, X } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { EXPORT_MARKETS, IMPORT_COUNTRIES } from "@/lib/site-data";
 
@@ -51,7 +52,177 @@ function Flag({ flagCode, name, size = 40, className = "" }) {
   );
 }
 
+// A single clickable flag tile used in both the import and export grids.
+// Rounded flag badge with a colored ring that distinguishes inbound
+// (brand/emerald) vs outbound (orange) — the signature shape for this redesign.
+function FlagTile({ flagCode, name, onClick, accent = "brand" }) {
+  const isBrand = accent === "brand";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group relative flex flex-col items-center gap-2.5 rounded-2xl border border-border/30 bg-card px-2.5 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg sm:gap-3 sm:px-3 sm:py-5 ${
+        isBrand ? "hover:border-brand-soft/50" : "hover:border-accent-orange/50"
+      }`}
+    >
+      <span
+        className={`overflow-hidden rounded-xl ring-1 transition-colors ${
+          isBrand
+            ? "ring-border/40 group-hover:ring-brand-soft/60"
+            : "ring-border/40 group-hover:ring-accent-orange/60"
+        }`}
+      >
+        <Flag flagCode={flagCode} name={name} size={56} />
+      </span>
+      <span className="text-center text-[11px] font-medium leading-tight text-foreground/90 sm:text-xs">
+        {name}
+      </span>
+      <span
+        className={`absolute right-2 top-2 h-1.5 w-1.5 rounded-full opacity-0 transition-opacity group-hover:opacity-100 ${
+          isBrand ? "bg-brand" : "bg-accent-orange"
+        }`}
+      />
+    </button>
+  );
+}
+
+// Detail panel shown after clicking a flag — split layout (flag fills one
+// side, dark info panel on the other), modeled on the reference card:
+// eyebrow label, big title, pill row, stat cards, gradient CTA.
+function DetailModal({ item, kind, onClose }) {
+  if (!item) return null;
+  const isImport = kind === "import";
+  const accentText = isImport ? "text-brand" : "text-accent-orange";
+  const cdnWidth = 320;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-sm p-0 sm:items-center sm:p-6"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 24, scale: 0.98 }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-3xl overflow-hidden rounded-t-3xl bg-[#0b1320] text-white shadow-2xl sm:rounded-3xl"
+        >
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm transition-colors hover:bg-black/60 hover:text-white"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" />
+          </button>
+
+          <div className="flex flex-col sm:flex-row">
+            {/* Flag side */}
+            <div className="relative h-44 w-full overflow-hidden sm:h-auto sm:w-[42%]">
+              {item.flagCode ? (
+                <img
+                  src={`https://flagcdn.com/w${cdnWidth}/${item.flagCode.toLowerCase()}.png`}
+                  alt={`${item.name} flag`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-white/5 text-5xl">🌐</div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent sm:bg-gradient-to-r" />
+              <span className="absolute bottom-3 left-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                {isImport ? "Origin" : "Market"}
+              </span>
+            </div>
+
+            {/* Info side */}
+            <div className="flex-1 p-6 sm:p-8">
+              <div className={`font-mono text-[11px] font-semibold uppercase tracking-[0.18em] ${accentText}`}>
+                {isImport ? "Inbound" : item.region ?? "Outbound"}
+              </div>
+              <h3 className="mt-1 font-display text-3xl font-bold leading-tight sm:text-4xl">
+                {item.name}
+              </h3>
+
+              {isImport ? (
+                <>
+                  <div className="mt-6 text-[11px] uppercase tracking-[0.14em] text-white/50">
+                    Products supplied
+                  </div>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    {item.products
+                      ?.split(/,|·/)
+                      .map((p) => p.trim())
+                      .filter(Boolean)
+                      .map((p) => (
+                        <span
+                          key={p}
+                          className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/90"
+                        >
+                          {p}
+                        </span>
+                      ))}
+                  </div>
+
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    <InfoCard label="Code" value={item.code ?? item.flagCode?.toUpperCase()} />
+                    <InfoCard label="Route" value={item.route ?? `${item.name} → Jebel Ali`} />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="mt-6 text-[11px] uppercase tracking-[0.14em] text-white/50">
+                    Buyer network
+                  </div>
+                  <p className="mt-2.5 text-[15px] leading-relaxed text-white/90">
+                    {item.buyers ?? "Wholesale + retail"}
+                  </p>
+
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    <InfoCard label="Region" value={item.region ?? "—"} />
+                    <InfoCard
+                      label="Status"
+                      value={
+                        <span className="flex items-center gap-1.5 text-accent-orange">
+                          <span className="h-1.5 w-1.5 rounded-full bg-accent-orange" />
+                          Active
+                        </span>
+                      }
+                    />
+                  </div>
+                </>
+              )}
+
+              <button
+                type="button"
+                className="mt-6 w-full rounded-full bg-gradient-brand px-6 py-3.5 text-center font-display text-[15px] font-semibold text-brand-foreground shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99]"
+              >
+                {isImport ? "Request quotation" : "View trade route"}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function InfoCard({ label, value }) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3">
+      <div className="text-[10px] uppercase tracking-[0.12em] text-white/50">{label}</div>
+      <div className="mt-1 text-[15px] font-medium text-white">{value}</div>
+    </div>
+  );
+}
+
 export default function MarketsPage() {
+  const [selected, setSelected] = useState(null); // { kind: 'import' | 'export', item }
+
   return (
     <SiteLayout>
       <div className="bg-background text-foreground">
@@ -62,7 +233,7 @@ export default function MarketsPage() {
             Network manifest
           </div>
 
-          <h1 className="mt-5 font-display text-5xl font-semibold uppercase leading-[1.02] tracking-tight md:text-6xl">
+          <h1 className="mt-5 font-display text-4xl font-semibold uppercase leading-[1.02] tracking-tight sm:text-5xl md:text-6xl">
             Ten origins.
             <br />
             One hub.
@@ -71,67 +242,42 @@ export default function MarketsPage() {
           </h1>
 
           <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground md:text-base">
-            Every shipment begins on a farm and ends on a shelf. This is the
-            route in between — vetted growers and packers feeding our Dubai
-            hub, then fanning out to wholesalers, retailers and HORECA buyers
-            across three continents.
+            Every shipment begins on a farm and ends on a shelf. Tap a flag to
+            see the origin, products and route — or the buyers and market
+            status for each destination.
           </p>
 
-          <div className="mt-12 flex gap-10 border-t border-border/30 pt-8 md:gap-16">
+          <div className="mt-12 flex gap-8 border-t border-border/30 pt-8 sm:gap-10 md:gap-16">
             <Stat n="10+" label="Origin countries" />
             <Stat n="01" label="Dubai hub" />
             <Stat n="15+" label="Export markets" />
           </div>
         </section>
 
-        {/* Import manifest */}
-        <section className="mx-auto max-w-6xl px-6 py-16 md:px-10">
+        {/* Import flags */}
+        <section className="mx-auto max-w-6xl px-6 py-12 sm:py-16 md:px-10">
           <SectionHead
             title="Import manifest"
             tag="Inbound"
             tagColor="green"
-            sub="Direct sourcing partnerships across origin countries"
+            sub="Tap a flag for sourcing details"
           />
 
-          {/* Column labels — desktop only */}
-          <div className="mt-4 hidden grid-cols-[28px_56px_1.3fr_100px_1.5fr_140px] gap-x-5 px-0 pb-3 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground md:grid">
-            <span />
-            <span>Flag</span>
-            <span>Origin</span>
-            <span>Code</span>
-            <span>Products</span>
-            <span className="text-right">Route</span>
-          </div>
-
-          <div>
-            {IMPORT_COUNTRIES.map((c, i) => (
+          <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-6">
+            {IMPORT_COUNTRIES.map((c) => (
               <motion.div
                 key={c.name}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.03, duration: 0.4 }}
-                className="grid grid-cols-[40px_1fr] items-center gap-x-4 gap-y-1.5 border-t border-border/30 py-4 transition-colors hover:bg-brand-soft/10 md:grid-cols-[28px_56px_1.3fr_100px_1.5fr_140px] md:gap-x-5 md:gap-y-0"
+                transition={{ duration: 0.3 }}
               >
-                <span className="hidden font-mono text-xs text-muted-foreground md:block">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-
-                <Flag flagCode={c.flagCode} name={c.name} size={40} className="col-span-1 row-span-3 md:row-span-1" />
-
-                <h3 className="font-display text-lg font-medium">{c.name}</h3>
-
-                <span className="col-start-2 inline-block w-fit rounded-[3px] border border-border/50 bg-brand-soft/20 px-2 py-0.5 font-mono text-xs text-brand md:col-start-auto">
-                  {c.code ?? c.flagCode?.toUpperCase()}
-                </span>
-
-                <p className="col-start-2 text-[13px] leading-snug text-muted-foreground md:col-start-auto">
-                  {c.products}
-                </p>
-
-                <span className="col-start-2 font-mono text-xs text-muted-foreground md:col-start-auto md:text-right">
-                  {c.route ?? `${c.name} → Jebel Ali`}
-                </span>
+                <FlagTile
+                  flagCode={c.flagCode}
+                  name={c.name}
+                  accent="brand"
+                  onClick={() => setSelected({ kind: "import", item: c })}
+                />
               </motion.div>
             ))}
           </div>
@@ -141,7 +287,7 @@ export default function MarketsPage() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-12 flex flex-col items-center gap-4 rounded border border-border/30 bg-gradient-to-r from-brand-soft/10 to-accent-orange/10 px-6 py-7 text-center md:flex-row md:gap-7 md:text-left"
+            className="mt-10 flex flex-col items-center gap-4 rounded border border-border/30 bg-gradient-to-r from-brand-soft/10 to-accent-orange/10 px-6 py-7 text-center md:flex-row md:gap-7 md:text-left"
           >
             <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
               Origin farms
@@ -160,50 +306,43 @@ export default function MarketsPage() {
           </motion.div>
         </section>
 
-        {/* Export departures board */}
-        <section className="mx-auto max-w-6xl px-6 py-16 md:px-10">
+        {/* Export flags */}
+        <section className="mx-auto max-w-6xl px-6 py-12 sm:py-16 md:px-10">
           <SectionHead
             title="Export departures"
             tag="Outbound"
             tagColor="orange"
-            sub="Wholesalers, retailers and HORECA buyers by market"
+            sub="Tap a flag for buyers and status"
           />
 
-          <div className="mt-6 overflow-hidden rounded border border-border/30">
-            {EXPORT_MARKETS.map((m, i) => (
+          <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-6">
+            {EXPORT_MARKETS.map((m) => (
               <motion.div
                 key={m.name}
-                initial={{ opacity: 0, x: 10 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.03, duration: 0.4 }}
-                className={`grid grid-cols-[36px_1fr] items-center gap-x-4 gap-y-1.5 px-5 py-5 transition-colors hover:bg-accent-orange/10 md:grid-cols-[44px_1.6fr_1fr_120px] md:gap-x-4 md:gap-y-0 ${
-                  i !== 0 ? "border-t border-border/30" : ""
-                }`}
+                transition={{ duration: 0.3 }}
               >
-                <Flag flagCode={m.flagCode} name={m.name} size={36} className="row-span-2 md:row-span-1" />
-
-                <div>
-                  <div className="font-display text-lg font-medium">{m.name}</div>
-                  <div className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
-                    {m.region}
-                  </div>
-                </div>
-
-                <div className="col-start-2 text-[13px] text-muted-foreground md:col-start-auto">
-                  {m.buyers ?? "Wholesale + retail"}
-                </div>
-
-                <div className="col-start-2 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.08em] text-accent-orange md:col-start-auto md:justify-end">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent-orange" />
-                  Active
-                  <ArrowRight className="ml-0.5 h-3 w-3 hidden md:block" />
-                </div>
+                <FlagTile
+                  flagCode={m.flagCode}
+                  name={m.name}
+                  accent="orange"
+                  onClick={() => setSelected({ kind: "export", item: m })}
+                />
               </motion.div>
             ))}
           </div>
         </section>
       </div>
+
+      {selected && (
+        <DetailModal
+          item={selected.item}
+          kind={selected.kind}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </SiteLayout>
   );
 }
@@ -231,7 +370,7 @@ function SectionHead({ title, tag, tagColor, sub }) {
     <div className="flex flex-col gap-3 border-b border-border/30 pb-6 md:flex-row md:items-baseline md:justify-between md:gap-6">
       <div className="flex items-center gap-3">
         <Icon className="h-5 w-5 text-accent-orange" />
-        <h2 className="font-display text-2xl font-semibold uppercase tracking-tight md:text-3xl">
+        <h2 className="font-display text-xl font-semibold uppercase tracking-tight sm:text-2xl md:text-3xl">
           {title}
         </h2>
         <span

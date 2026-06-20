@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { api } from "@/lib/api";
+import SEO from "@/components/site/SEO";
 
 const ROLE_OPTIONS = [
   {
@@ -49,6 +50,11 @@ export default function ContactPage() {
 
   return (
     <SiteLayout>
+      <SEO
+        title="Contact Us — Get a Quote"
+        description="Get in touch with Swapnil Dinesh Trading for fresh produce import/export inquiries. Offices in Deira, Dubai. Fast replies during UAE business hours."
+        path="/contact"
+      />
       <section className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-10 md:pt-24">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Contact</div>
         <h1 className="mt-3 font-display text-4xl font-bold md:text-5xl">Let's talk trade</h1>

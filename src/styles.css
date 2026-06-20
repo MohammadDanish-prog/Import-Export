@@ -175,3 +175,93 @@
     box-shadow: var(--shadow-elevated);
   }
 }
+
+/* ─── RTL Support ──────────────────────────────────────────────────────────── */
+[dir="rtl"] {
+  font-family: "Noto Sans Arabic", "Inter", system-ui, sans-serif;
+}
+
+/* Arabic / Urdu specific font stacks */
+:lang(ar),
+:lang(ur) {
+  font-family: "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+/* RTL layout fixes */
+[dir="rtl"] .ltr\:right-0 {
+  right: auto;
+  left: 0;
+}
+[dir="rtl"] .rtl\:left-0 {
+  left: 0;
+}
+
+/* Fix pill nav text alignment for RTL */
+[dir="rtl"] [role="menubar"] {
+  flex-direction: row-reverse;
+}
+
+/* Text alignment helpers */
+[dir="rtl"] .text-left { text-align: right; }
+[dir="rtl"] .text-right { text-align: left; }
+
+/* Ensure icons don't flip in RTL (most icons are symmetric, keep as-is) */
+[dir="rtl"] svg.no-flip {
+  transform: none;
+}
+
+/* ─── Zoom / Scale Fix ─────────────────────────────────────────────────────── */
+/* Ensure the site renders at 100% browser zoom, not zoomed-in 20%.
+   Setting font-size: 100% on html means 1rem = browser default (16px).
+   All Tailwind values are already relative so this corrects the scaling. */
+html {
+  font-size: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ─── Google Translate overrides ──────────────────────────────────────────── */
+/* Kill the top bar Google injects when translation is active */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe.goog-te-balloon-frame,
+.goog-te-gadget,
+.goog-te-gadget *,
+.goog-te-menu-value,
+.goog-te-spinner-pos,
+#google_translate_element,
+#google_translate_element *,
+body .skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+body { top: 0 !important; }
+
+/* Kill the floating tooltip bubble */
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-te-balloon-frame * { display: none !important; }
+
+/* Prevent font override on translated pages */
+font[face] { font-family: inherit !important; }
+
+/* RTL support when Google Translate switches to Arabic/Urdu */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .flex:not(.flex-col) {
+  /* let flex rows still flow, just let text inside align right */
+}
+
+/* ─── Zoom / Scale Fix ─────────────────────────────────────────────────────── */
+html {
+  font-size: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}

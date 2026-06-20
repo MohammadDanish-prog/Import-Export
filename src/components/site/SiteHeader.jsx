@@ -3,40 +3,27 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const NAV = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
+  { to: "/",         label: "Home" },
+  { to: "/about",    label: "About" },
   { to: "/products", label: "Products" },
-  { to: "/markets", label: "Markets" },
-//  { to: "/services", label: "Services" },
-  { to: "/quality", label: "Quality" },
- // { to: "/invest", label: "Invest" },
-  { to: "/contact", label: "Contact" },
+  { to: "/markets",  label: "Markets" },
+  { to: "/services", label: "Services" },
+  { to: "/quality",  label: "Quality" },
+  { to: "/contact",  label: "Contact" },
 ];
 
 const LeafLogo = () => (
   <span className="relative grid h-10 w-10 place-items-center rounded-full bg-gradient-brand text-brand-foreground shadow-elevated ring-1 ring-inset ring-white/15">
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-5 w-5"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
       <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
       <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
     </svg>
   </span>
 );
 
-/**
- * Desktop pill navigation — GSAP fill/label-swap animation on hover,
- * built entirely with Tailwind classes (no separate CSS file).
- * Only ever mounted at lg+ widths; mobile uses the hamburger drawer below.
- */
 const PILL_ITEMS = [...NAV, { to: "/contact", label: "Request Quote", cta: true }];
 
 function PillLinks({ pathname }) {
@@ -48,29 +35,22 @@ function PillLinks({ pathname }) {
     const layout = () => {
       circleRefs.current.forEach((circle, i) => {
         if (!circle?.parentElement) return;
-
         const pill = circle.parentElement;
         const rect = pill.getBoundingClientRect();
         const { width: w, height: h } = rect;
         if (!w || !h) return;
-
         const R = ((w * w) / 4 + h * h) / (2 * h);
         const D = Math.ceil(2 * R) + 2;
         const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
         const originY = D - delta;
-
         circle.style.width = `${D}px`;
         circle.style.height = `${D}px`;
         circle.style.bottom = `-${delta}px`;
-
         gsap.set(circle, { xPercent: -50, scale: 0, transformOrigin: `50% ${originY}px` });
-
         const label = pill.querySelector(".pill-label");
         const hoverLabel = pill.querySelector(".pill-label-hover");
-
         if (label) gsap.set(label, { y: 0 });
         if (hoverLabel) gsap.set(hoverLabel, { y: h + 12, opacity: 0 });
-
         tlRefs.current[i]?.kill();
         const tl = gsap.timeline({ paused: true });
         tl.to(circle, { scale: 1.2, xPercent: -50, duration: 2, ease: "power3.easeOut", overwrite: "auto" }, 0);
@@ -82,7 +62,6 @@ function PillLinks({ pathname }) {
         tlRefs.current[i] = tl;
       });
     };
-
     layout();
     window.addEventListener("resize", layout);
     document.fonts?.ready?.then(layout).catch(() => {});
@@ -95,7 +74,6 @@ function PillLinks({ pathname }) {
     activeTweenRefs.current[i]?.kill();
     activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), { duration: 0.3, ease: "power3.easeOut", overwrite: "auto" });
   };
-
   const handleLeave = (i) => {
     const tl = tlRefs.current[i];
     if (!tl) return;
@@ -158,9 +136,7 @@ export function SiteHeader() {
     setDark(document.documentElement.classList.contains("dark"));
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  useEffect(() => { setOpen(false); }, [pathname]);
 
   const toggleDark = () => {
     const next = !dark;
@@ -169,37 +145,24 @@ export function SiteHeader() {
   };
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass shadow-sm" : "bg-transparent"
-      }`}
-    >
-      <div
-        className={`mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-all duration-300 md:px-8 ${
-          scrolled ? "py-2.5" : "py-3 md:py-4"
-        }`}
-      >
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "glass shadow-sm" : "bg-transparent"}`}>
+      <div className={`mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-all duration-300 md:px-8 ${scrolled ? "py-2.5" : "py-3 md:py-4"}`}>
         <Link to="/" className="flex shrink-0 items-center gap-2.5 group">
           <LeafLogo />
           <span className="hidden flex-col leading-tight sm:flex">
             <span className="font-display text-base font-bold text-foreground">Swapnil Dinesh</span>
-            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Fresh Produce Trading
-            </span>
+            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Fresh Produce Trading</span>
           </span>
         </Link>
 
-        {/* Desktop pill nav — only this section needs lg+ width */}
-        <nav
-          aria-label="Primary"
-          className="hidden flex-1 items-center justify-center lg:flex"
-        >
+        <nav aria-label="Primary" className="hidden flex-1 items-center justify-center lg:flex">
           <div className="flex items-center rounded-full bg-foreground/5">
             <PillLinks pathname={pathname} />
           </div>
         </nav>
 
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <LanguageSwitcher />
           <button
             aria-label="Menu"
             onClick={() => setOpen((v) => !v)}
@@ -217,7 +180,6 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -228,36 +190,21 @@ export function SiteHeader() {
           >
             <div className="mx-auto grid max-w-7xl gap-1 px-4 py-4">
               {NAV.map((item, i) => (
-                <motion.div
-                  key={item.to}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                >
+                <motion.div key={item.to} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
                   <Link
                     to={item.to}
                     className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${
-                      pathname === item.to
-                        ? "bg-brand-soft text-brand"
-                        : "text-foreground/80 hover:bg-muted"
+                      pathname === item.to ? "bg-brand-soft text-brand" : "text-foreground/80 hover:bg-muted"
                     }`}
                   >
-                    <span className="text-[10px] font-mono text-muted-foreground">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                    <span className="text-[10px] font-mono text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
-              {/* CTA repeated here since the desktop pill nav (with its own
-                  Request Quote pill) is hidden below lg: */}
               <Link
                 to="/contact"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${
-                      pathname === "/contact"
-                        ? "bg-brand-soft text-brand"
-                        : "text-foreground/80 hover:bg-muted"
-                    }`}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${pathname === "/contact" ? "bg-brand-soft text-brand" : "text-foreground/80 hover:bg-muted"}`}
               >
                 Request Quote
               </Link>

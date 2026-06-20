@@ -4,6 +4,7 @@ import { ArrowRight, Ship, Snowflake, ShieldCheck, Globe2, Package, CheckCircle2
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { GALLERY, SERVICES } from "@/lib/site-data";
 import GlobeHero from "@/components/site/GlobeHero";
+import SEO, { organizationSchema } from "@/components/site/SEO";
 
 const STATS = [
   { value: "20+", label: "Trading Partners" },
@@ -21,6 +22,12 @@ const HERO_BADGES = [
 export default function HomePage() {
   return (
     <SiteLayout>
+      <SEO
+        title="Global Fresh Produce Excellence"
+        description="Dubai-based importer and exporter of premium fresh fruits and vegetables. Trusted sourcing, quality assurance and reliable global logistics across 15+ countries."
+        path="/"
+        jsonLd={organizationSchema()}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_20%_10%,color-mix(in_oklab,var(--brand)_18%,transparent),transparent),radial-gradient(50%_50%_at_90%_20%,color-mix(in_oklab,var(--accent-orange)_15%,transparent),transparent)]" />

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, Calendar, MapPin } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PRODUCTS, COUNTRY_CODES } from "@/lib/site-data";
+import SEO from "@/components/site/SEO";
 
 export default function ProductsPage() {
   const [filter, setFilter] = useState("All");
@@ -19,6 +20,11 @@ export default function ProductsPage() {
 
   return (
     <SiteLayout>
+      <SEO
+        title="Products — Fresh Fruits & Vegetables Catalog"
+        description="Browse our catalog of premium fresh fruits and vegetables sourced globally — bananas, mangoes, citrus, leafy greens and more, available year-round and seasonally."
+        path="/products"
+      />
       <section className="mx-auto max-w-7xl px-6 pt-16 pb-8 md:px-10 md:pt-24">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Catalog</div>
         <h1 className="mt-3 font-display text-4xl font-bold md:text-5xl">
@@ -144,7 +150,7 @@ function ProductCard({ product, onClick }) {
             return code ? (
               <img
                 key={country}
-                src={`https://flagcdn.com/w20/${code}.png`}
+                src={`https://flagcdn.com/w20/${code.toLowerCase()}.png`}
                 alt={country}
                 title={country}
                 width="20"
@@ -239,7 +245,7 @@ function ProductModal({ product, onClose }) {
                       <span key={country} className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 text-xs">
                         {code && (
                           <img
-                            src={`https://flagcdn.com/w24/${code}.png`}
+                            src={`https://flagcdn.com/w20/${code.toLowerCase()}.png`}
                             alt={country}
                             width="16"
                             height="11"

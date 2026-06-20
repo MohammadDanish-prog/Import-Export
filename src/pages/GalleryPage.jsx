@@ -3,12 +3,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { GALLERY } from "@/lib/site-data";
+import SEO from "@/components/site/SEO";
 
 export default function GalleryPage() {
   const [selected, setSelected] = useState(null);
 
   return (
     <SiteLayout>
+      <SEO
+        title="Gallery — Inside Our Operations"
+        description="A look inside Swapnil Dinesh Trading's warehouses, cold rooms and trade desks — from sourcing to shipment."
+        path="/gallery"
+      />
       <section className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-10 md:pt-24">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Gallery</div>
         <h1 className="mt-3 font-display text-4xl font-bold md:text-5xl">Inside our operations</h1>

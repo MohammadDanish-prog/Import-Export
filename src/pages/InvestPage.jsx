@@ -5,6 +5,7 @@ import {
   PieChart, Building2, Users, CheckCircle2, Mail,
 } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import SEO from "@/components/site/SEO";
 
 const WHY_POINTS = [
   {
@@ -55,6 +56,11 @@ const HOW_IT_WORKS = [
 export default function InvestPage() {
   return (
     <SiteLayout>
+      <SEO
+        title="Invest & Partnership Opportunities"
+        description="Explore equity and partnership opportunities with Swapnil Dinesh Trading — an established fresh produce trade network across 15+ countries."
+        path="/invest"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_15%_0%,color-mix(in_oklab,var(--brand)_18%,transparent),transparent),radial-gradient(50%_50%_at_90%_30%,color-mix(in_oklab,var(--accent-orange)_14%,transparent),transparent)]" />

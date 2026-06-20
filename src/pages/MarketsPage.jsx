@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plane, Ship, X } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { EXPORT_MARKETS, IMPORT_COUNTRIES } from "@/lib/site-data";
+import SEO from "@/components/site/SEO";
 
 // flagcdn.com only supports these widths: 20, 40, 80, 160, 320
 // Passing any other value (48, 64) returns a 404, so we always round up to a supported size
@@ -225,6 +226,11 @@ export default function MarketsPage() {
 
   return (
     <SiteLayout>
+      <SEO
+        title="Markets — Import & Export Trade Routes"
+        description="Explore the countries we import fresh produce from and export to — covering Gulf, African, Asian and European markets with reliable sea and air logistics."
+        path="/markets"
+      />
       <div className="bg-background text-foreground">
         {/* Hero */}
         <section className="mx-auto max-w-7xl px-6 py-1 md:px-10 md:py-5">

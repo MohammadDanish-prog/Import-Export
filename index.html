@@ -2,17 +2,103 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <link rel="canonical" href="https://www.swapnildinesh.ae/" />
+    <meta name="theme-color" content="#0f5132" />
+    <meta name="robots" content="index, follow" />
     <title>Swapnil Dinesh Trading — Global Fresh Produce Excellence</title>
     <meta name="description" content="Dubai-based importer and exporter of premium fresh fruits and vegetables. Trusted sourcing, quality assurance and reliable global logistics." />
+
+    <!-- Open Graph / Twitter (page components override these per-route via react-helmet-async) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Swapnil Dinesh Trading" />
+    <meta property="og:image" content="https://www.swapnildinesh.ae/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="//translate.google.com/translate_a/element.js" as="script" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
     />
+
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      window.googleTranslateReady = false;
+      window.__googleTranslateReadyCallbacks = [];
+      window.onGoogleTranslateReady = function (callback) {
+        if (window.googleTranslateReady) {
+          callback();
+        } else {
+          window.__googleTranslateReadyCallbacks.push(callback);
+        }
+      };
+
+      function googleTranslateElementInit() {
+        window.googleTranslateReady = true;
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,ar,hi,ur,ru,fr,zh-CN,de,es,ja,ko,tr,pt',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          'google_translate_element'
+        );
+        window.__googleTranslateReadyCallbacks.forEach((cb) => cb());
+        window.__googleTranslateReadyCallbacks = [];
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      async
+    ></script>
+    <script>
+      (function () {
+        try {
+          const cookieMatch = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+          const savedLang = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
+          const localLang = localStorage.getItem("sd-lang");
+          const activeLang = savedLang || localLang;
+
+          if (activeLang === "ar" || activeLang === "ur") {
+            document.documentElement.dir = "rtl";
+            document.documentElement.lang = activeLang;
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
+
+    <style>
+      /* Hide the default Google Translate toolbar completely */
+      .goog-te-banner-frame,
+      .goog-te-banner-frame.skiptranslate,
+      #goog-gt-tt,
+      .goog-te-balloon-frame,
+      div#goog-gt- {
+        display: none !important;
+      }
+      body {
+        top: 0 !important;
+        position: static !important;
+      }
+      /* Hide the default widget container */
+      #google_translate_element {
+        display: none !important;
+      }
+      /* Suppress any Google Translate UI artifacts */
+      .goog-te-gadget { display: none !important; }
+      .VIpgJd-ZVi9od-ORHb { display: none !important; }
+      .VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q { display: none !important; }
+    </style>
   </head>
   <body>
+    <!-- Hidden Google Translate widget (we drive it via our own UI) -->
+    <div id="google_translate_element"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

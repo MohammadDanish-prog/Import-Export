@@ -2,10 +2,16 @@ import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SERVICES } from "@/lib/site-data";
+import SEO from "@/components/site/SEO";
 
 export default function ServicesPage() {
   return (
     <SiteLayout>
+      <SEO
+        title="Services — Sourcing, Logistics & Compliance"
+        description="A full-stack fresh produce trading offering across sourcing, cold-chain logistics, quality compliance and packaging for international food businesses."
+        path="/services"
+      />
       <section className="mx-auto max-w-7xl px-6 pt-16 pb-12 md:px-10 md:pt-24">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Services</div>
         <h1 className="mt-3 font-display text-4xl font-bold md:text-5xl">

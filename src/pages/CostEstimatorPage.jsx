@@ -10,6 +10,7 @@ import {
   TRADE_DIRECTIONS, ORIGIN_COUNTRIES, EXPORT_DESTINATIONS,
   SHIPPING_METHODS, PACKAGING_TYPES, calculateEstimate, formatUSD,
 } from "@/lib/estimator-data";
+import SEO from "@/components/site/SEO";
 
 const METHOD_ICONS = { sea_fcl: Ship, sea_lcl: Ship, air: Plane, land: Truck };
 
@@ -298,6 +299,11 @@ function LineItem({ label, value, icon: Icon, bold, highlight, muted }) {
 export default function CostEstimatorPage() {
   return (
     <SiteLayout>
+      <SEO
+        title="Shipment Cost Estimator"
+        description="Instantly estimate the cost of importing or exporting fresh produce — sea, air or land freight, with a transparent line-item breakdown."
+        path="/cost-estimator"
+      />
       <section className="mx-auto max-w-7xl px-6 pt-16 pb-10 md:px-10 md:pt-24">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           Shipment planning

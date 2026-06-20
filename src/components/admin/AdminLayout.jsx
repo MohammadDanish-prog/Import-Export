@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   LayoutDashboard, Package, MessageSquare, Globe, Plane,
   Images, Award, FileText, Settings, Bell, Search,
@@ -38,6 +39,9 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-muted/30">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       {/* ── Sidebar ── */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 w-64 flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-transform duration-300 lg:translate-x-0 ${

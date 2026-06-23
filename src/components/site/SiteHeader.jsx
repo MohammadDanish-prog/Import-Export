@@ -82,14 +82,14 @@ function PillLinks({ pathname }) {
   };
 
   return (
-    <ul className="flex items-stretch gap-[3px] p-[3px]" role="menubar">
+    <ul className="flex items-stretch gap-[3px] p-[3px]">
       {PILL_ITEMS.map((item, i) => {
         const active = pathname === item.to;
         return (
-          <li key={item.to + item.label} role="none" className="flex">
+          <li key={item.to + item.label} className="flex">
             <Link
-              role="menuitem"
               to={item.to}
+              aria-current={active ? "page" : undefined}
               onMouseEnter={() => handleEnter(i)}
               onMouseLeave={() => handleLeave(i)}
               className={`relative flex items-center justify-center overflow-hidden whitespace-nowrap rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-foreground transition-colors ${
@@ -164,14 +164,17 @@ export function SiteHeader() {
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <LanguageSwitcher />
           <button
-            aria-label="Menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
             className="grid h-10 w-10 place-items-center rounded-full border border-border lg:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
           <button
-            aria-label="Toggle theme"
+            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={dark}
             onClick={toggleDark}
             className="grid h-9 w-9 place-items-center rounded-full border border-border text-foreground/70 transition hover:bg-muted hover:text-foreground"
           >
@@ -187,6 +190,9 @@ export function SiteHeader() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             className="border-t border-border glass lg:hidden"
+            id="mobile-nav"
+            role="navigation"
+            aria-label="Mobile"
           >
             <div className="mx-auto grid max-w-7xl gap-1 px-4 py-4">
               {NAV.map((item, i) => (

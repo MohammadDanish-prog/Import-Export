@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <SiteLayout>
       <SEO
-        title="Global Fresh Produce Excellence"
+        title="Dubai Fresh Produce Import & Export"
         description="Dubai-based importer and exporter of premium fresh fruits and vegetables. Trusted sourcing, quality assurance and reliable global logistics across 15+ countries."
         path="/"
         jsonLd={organizationSchema()}

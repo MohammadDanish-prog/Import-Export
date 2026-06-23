@@ -22,6 +22,12 @@ export default function GalleryPage() {
           From source to shipment — moments captured across our warehouses, cold rooms and trade
           desks.
         </p>
+        <p className="mt-4 max-w-3xl text-sm text-muted-foreground/90 leading-relaxed">
+          Browse photos from our Dubai-based fresh produce operation — cold storage facilities
+          maintaining strict temperature control, quality inspection of incoming fruits and
+          vegetables, palletizing and export packaging, and the trade desk coordinating import
+          and export shipments with partners across the Gulf, Africa, Asia and Europe.
+        </p>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-20 md:px-10">

@@ -33,6 +33,13 @@ export default function ProductsPage() {
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Sourced directly from trusted growers and shipped through our cold chain network.
         </p>
+        <p className="mt-4 max-w-3xl text-sm text-muted-foreground/90 leading-relaxed">
+          As a Dubai-based fresh produce trading company, we import and export a wide range of
+          fruits and vegetables — from year-round staples like bananas, apples and avocados to
+          seasonal specialties like mangoes, pomegranates and grapes. Each product is sourced from
+          verified origin countries, quality-checked, and moved through our cold-chain logistics
+          network to wholesalers, distributors and retailers across the Gulf and beyond.
+        </p>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-2">
@@ -150,7 +157,7 @@ function ProductCard({ product, onClick }) {
             return code ? (
               <img
                 key={country}
-                src={`https://flagcdn.com/w20/${code.toLowerCase()}.png`}
+                src={`https://flagcdn.com/w20/${code}.png`}
                 alt={country}
                 title={country}
                 width="20"
@@ -245,7 +252,7 @@ function ProductModal({ product, onClose }) {
                       <span key={country} className="flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 text-xs">
                         {code && (
                           <img
-                            src={`https://flagcdn.com/w20/${code.toLowerCase()}.png`}
+                            src={`https://flagcdn.com/w24/${code}.png`}
                             alt={country}
                             width="16"
                             height="11"

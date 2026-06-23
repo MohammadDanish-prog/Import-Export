@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <SiteLayout>
       <SEO
-        title="About Us"
+        title="About Us — Dubai Fresh Produce Trading Company"
         description="Swapnil Dinesh Vegetable and Fruit Trading LLC SOC is a Dubai-based fresh produce trading company specializing in import and export of premium fruits and vegetables worldwide."
         path="/about"
       />

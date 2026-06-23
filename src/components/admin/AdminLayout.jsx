@@ -9,14 +9,7 @@ import {
 
 const NAV = [
   { to: "/admin",              label: "Overview",         icon: LayoutDashboard, exact: true },
-  { to: "/admin/products",     label: "Products",         icon: Package },
   { to: "/admin/inquiries",    label: "Inquiries",        icon: MessageSquare },
-  { to: "/admin/imports",      label: "Import Markets",   icon: Globe },
-  { to: "/admin/exports",      label: "Export Markets",   icon: Plane },
-  { to: "/admin/gallery",      label: "Gallery",          icon: Images },
-  { to: "/admin/certifications",label: "Certifications",  icon: Award },
-  { to: "/admin/content",      label: "Website Content",  icon: FileText },
-  { to: "/admin/settings",     label: "Settings",         icon: Settings },
 ];
 
 export default function AdminLayout() {

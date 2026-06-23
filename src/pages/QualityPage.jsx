@@ -2,10 +2,16 @@ import { motion } from "framer-motion";
 import { Award, ShieldCheck } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { CERTIFICATIONS, QUALITY_STEPS } from "@/lib/site-data";
+import SEO from "@/components/site/SEO";
 
 export default function QualityPage() {
   return (
     <SiteLayout>
+      <SEO
+        title="Quality Assurance & Certifications"
+        description="Strict quality control across sourcing, cold-chain handling and inspection — HACCP-certified processes ensuring fresh produce meets international standards."
+        path="/quality"
+      />
       <section className="mx-auto max-w-7xl px-4 pt-10 pb-10 sm:px-6 md:px-10 md:pt-24 md:pb-12">
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
           Quality assurance
@@ -16,6 +22,16 @@ export default function QualityPage() {
         <p className="mt-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
           A six-stage process ensures consistency, freshness and compliance from the farm gate to
           the destination dock.
+        </p>
+        <p className="mt-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
+          Quality in the fresh produce trade isn't a single checkpoint — it's a chain of
+          decisions made long before a shipment ever reaches the port. At Swapnil Dinesh Trading,
+          every batch we move through Dubai is screened against the same standard, whether it's
+          headed to a wholesale market in the Gulf or a retail distributor in Europe. We work
+          directly with growers and packhouses to verify harvest practices, monitor cold-chain
+          temperatures from pack to pallet, and inspect produce for grade, ripeness and defects
+          before it's cleared for loading. That discipline is what lets our buyers order with
+          confidence and our suppliers build long-term partnerships with us.
         </p>
       </section>
 
@@ -68,6 +84,14 @@ export default function QualityPage() {
           </div>
           <p className="mt-2 text-sm text-muted-foreground sm:text-base">
             We operate against globally recognized food safety frameworks.
+          </p>
+          <p className="mt-4 max-w-3xl text-sm text-muted-foreground sm:text-base">
+            These certifications aren't just documentation on file — they shape how our
+            warehouses, cold rooms and transport partners operate day to day. Produce is held at
+            the correct temperature band for its category, inspected on arrival and again before
+            dispatch, and traceable back to its origin batch. For importers and distributors
+            working with strict food safety regulations in their own markets, that traceability is
+            often the deciding factor in choosing a trade partner.
           </p>
           <div className="mt-6 flex flex-wrap gap-2 sm:gap-3">
             {CERTIFICATIONS.map((c, i) => (

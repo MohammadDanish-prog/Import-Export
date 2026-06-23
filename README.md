@@ -76,6 +76,3 @@ npm run build
 Visit `/admin` for the admin dashboard. Features:
 - Product management (add, edit, delete, toggle active)
 - Inquiry management (view, update status, delete, CSV export)
-- Content editor (edit site text)
-- Gallery management
-- Certifications management

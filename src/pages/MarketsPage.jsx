@@ -253,6 +253,14 @@ export default function MarketsPage() {
             status for each destination.
           </p>
 
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground/90">
+            From our Dubai hub, we import fresh fruits and vegetables from over ten origin
+            countries across Asia, Africa and Europe, then export to fifteen-plus markets across
+            the Gulf and beyond. Our trade network connects growers, sea and air freight partners,
+            and buyers — giving wholesalers and importers a single point of contact for sourcing
+            and distributing fresh produce internationally.
+          </p>
+
           <div className="mt-12 flex gap-8 border-t border-border/30 pt-8 sm:gap-10 md:gap-16">
             <Stat n="10+" label="Origin countries" />
             <Stat n="01" label="Dubai hub" />

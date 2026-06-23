@@ -21,6 +21,14 @@ export default function ServicesPage() {
           A full-stack offering across sourcing, logistics, compliance and packaging — designed
           for international food businesses.
         </p>
+        <p className="mt-4 max-w-3xl text-sm text-muted-foreground/90 leading-relaxed">
+          Swapnil Dinesh Trading manages every stage of fresh produce import and export from our
+          Dubai base — sourcing fruits and vegetables from trusted growers, coordinating cold-chain
+          sea and air logistics, handling customs and quality compliance, and packing shipments to
+          meet the standards of wholesalers, retailers and food distributors across the Gulf,
+          Africa, Asia and Europe. Whether you're an exporter looking to reach new markets or an
+          importer sourcing reliable produce, our team handles the trade logistics end-to-end.
+        </p>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 pb-20 md:px-10">
